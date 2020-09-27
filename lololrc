@@ -1,0 +1,119 @@
+using System;
+using System.ComponentModel.Design;
+using System.Security.Cryptography.X509Certificates;
+namespace ConsoleApp4
+{
+    class Program
+    {
+        class Animal
+        {
+            public void perevoz()
+            {
+                string[] bereg1 = new string[3] { "Волк ", "Коза", "Капуста" };
+                string[] bereg2 = new string[3];
+                int key; int key1; int key2; int key3;
+                Console.WriteLine("Выберите, кого перевезти первым:\n1.Волк\n2.Коза\n3.Капуста");
+                key = Convert.ToInt32(Console.ReadLine());
+                if (key == 1)
+                {
+                    Console.WriteLine("Вы отвезли волка на другой берег. Коза съела капусту. Поражение."); Console.ReadKey(); Console.Clear();
+                }
+                else if (key == 2)
+                {
+                    Console.WriteLine("Вы отвезли козу на другой берег. Выберите следующее действие: \n1.Перевести волка и забрать козу обратно\n2.Перевести капусту и забрать козу обратно ");
+                    bereg2[0] = bereg1[1];
+                    Array.Clear(bereg1, 1, 1);
+                    Console.Write("\nНа берегу 1: "); Console.Write("               На берегу 2: ");
+                    for(int ii =  0;ii < 3; ii++)
+                    {
+                        Console.Write( "\n" + bereg1[ii] + " ");
+                        Console.WriteLine("                      " + bereg2[ii]);
+                    }                  
+                    key1 = Convert.ToInt32(Console.ReadLine());
+                    if (key1 == 1)
+                    {
+                        Console.WriteLine("Поздравляем. Вы перевезли волка, взяв с собой козу. Выберите: \n1.Перевести капусту.\n2.Перевести овцу к волку");
+                        bereg2[1] = bereg1[0];
+                        bereg1[1] = bereg2[0];
+                        Array.Clear(bereg1, 0, 1);
+                        Array.Clear(bereg2, 0, 1);
+                        Console.Write("\nНа берегу 1: "); Console.Write("               На берегу 2: ");
+                        for (int ii = 0; ii < 3; ii++)
+                        {
+                            Console.Write("\n" + bereg1[ii] + " ");
+                            Console.WriteLine("                      " + bereg2[ii]);
+                        }
+                        key2 = Convert.ToInt32(Console.ReadLine());
+
+                        if (key2 == 1)
+                        {
+                            Console.WriteLine("Капуста и волк на другой стороне. Выберите: \n1. Довезти оставшуюся козу.");
+                            bereg2[2] = bereg1[2];
+                            Array.Clear(bereg1, 2, 1);
+                            Console.Write("\nНа берегу 1: "); Console.Write("               На берегу 2: ");
+                            for (int ii = 0; ii < 3; ii++)
+                            {
+                                Console.Write("\n" + bereg1[ii] + " ");
+                                Console.WriteLine("                      " + bereg2[ii]);
+                            }
+                            key3 = Convert.ToInt32(Console.ReadLine());
+                            if (key3 == 1)
+                            {
+                                bereg2[0] = bereg1[1];
+                                Array.Clear(bereg1, 1, 1);
+                                Console.Write("\nНа берегу 1: "); Console.Write("               На берегу 2: ");
+                                for (int ii = 0; ii < 3; ii++)
+                                {
+                                    Console.Write("\n" + bereg1[ii] + " ");
+                                    Console.WriteLine("                      " + bereg2[ii]);
+                                }
+                                Console.WriteLine("Все успешно перевезены. Задача решена.");
+                            }
+                        }
+                        else if (key2 == 2)
+                        {
+                            Console.WriteLine("Волк съел козу. Поражение. Повторите попытку.");
+                        }
+                    }
+                    else if (key1 == 2)
+                    {
+                        Console.WriteLine("Коза съела капусту. Поражение. "); Console.ReadKey(); Console.Clear();
+                    }
+                }
+                else if (key == 3)
+                {
+                    Console.WriteLine("Ошибка. Волк съел козу. Поражение."); Console.ReadKey(); Console.Clear();
+                }
+            }
+            public void result()
+            {
+                Console.WriteLine("\n1. Перевести козу. \n2. Перевести волка, взяв с собой козу. \n3. Перевести капусту. \n4. Вернуться за козой.");
+            }
+        }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Выберите действие: ");
+            Animal a = new Animal();
+            do
+            {
+                Console.WriteLine("[1]. Решить задачу.\n[2]. Посмотреть ответ.\n[3]. Выход.");
+                int i = int.Parse(Console.ReadLine());
+                switch (i)
+                {
+                    case 1:
+                        a.perevoz();
+                        break;
+                    case 2:
+                        a.result(); Console.ReadKey(); Console.Clear();
+                        break;
+                    case 3:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Ошибка.");
+                        break;
+                }
+            } while (true);
+        }
+    }
+}
