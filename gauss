@@ -1,0 +1,147 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AMO
+{
+    class Program
+    {
+        class Gauss
+        {
+            static int n = 4; 
+            double[,] a = new double[n, n];
+            double[] b = new double[n];
+            double[] x = new double[n];
+            double s = 0;
+
+            public void gaussobr()
+            {
+                for (int i = 0; i < n; i++)
+
+                    x[i] = 0;
+                Console.WriteLine("Введите 9 значений с клавиатуры для построения матрицы: ");
+
+                for (int i = 0; i < n; i++)
+                    for (int j = 0; j < n; j++)
+                    {
+                        a[i, j] = double.Parse(Console.ReadLine());
+                    }
+
+                for (int i = 0; i < n; ++i)
+                {
+                    for (int j = 0; j < n; ++j)
+                    {                       
+                        Console.Write(" " + a[i, j] + "");
+                    }
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine("Введите коэффициенты: y1, y2, y3");
+                for (int i = 0; i < n; i++)
+                    b[i] = double.Parse(Console.ReadLine());
+
+                for (int k = 0; k < n - 1; k++)
+                {
+                    for (int i = k + 1; i < n; i++)
+                    {
+                        for (int j = k + 1; j < n; j++)
+                        {
+                            a[i, j] = a[i, j] - a[k, j] * (a[i, k] / a[k, k]);
+                        }
+                        b[i] = b[i] - b[k] * a[i, k] / a[k, k];
+                    }
+                }
+                for (int k = n - 1; k >= 0; k--)
+                {
+                    s = 0;
+                    for (int j = k + 1; j < n; j++)
+                        s = s + a[k, j] * x[j];
+                    x[k] = (b[k] - s) / a[k, k];
+                }
+                for (int i = 0; i < x.Length; i++)
+                {
+                    Console.WriteLine("Ответ: ");
+                    Console.WriteLine("x1 = {0:0.##}", x[i]);
+                    Console.WriteLine("x2 = {0:0.##}", x[i]);
+                    Console.WriteLine("x3 = {0:0.##}", x[i]);
+                    Console.WriteLine("x4 = {0:0.##}", x[i]);
+                }
+                for (int k = n - 1; k >= 0; k--)
+                {
+                    s = 0;
+                    for (int j = k + 1; j < n; j++)
+                        s = s + a[k, j] / 2 * x[j] / 2;
+                    x[k] = (b[k] - s) / a[k, k] / 2;
+                }
+                
+                Console.WriteLine("Обратная матрица: ");
+                for (int i = 0; i < x.Length; i++)
+                {             
+                    Console.Write("{0:0.##}" + " ", x[i]);                   
+                }
+
+            }
+          
+
+            public void opred()
+            {
+                Console.Write("Введите n: ");
+                int n = int.Parse(Console.ReadLine());
+                Console.Write("\n");
+                int[,] a = new int[n, n];
+                Random rnd = new Random();
+                for (int i = 0; i < n; ++i)
+                {
+                    for (int j = 0; j < n; ++j)
+                    {
+                        a[i, j] = rnd.Next(10, 100);
+                        Console.Write("  " + a[i, j] + "");
+                    }
+                    Console.WriteLine();
+                }
+                {
+                    int tt = 0;
+                    for (int i = 0; i < n; i++)
+                    {
+                        tt += a[i, i];
+                    }
+                    int opredelitel = a[0, 0] * a[1, 1] - a[0, 1] * a[1, 0];
+                    Console.Write("\n");
+                    Console.WriteLine("1.Сумма диагонали = " + tt);
+                    Console.WriteLine("2.Определитель матрицы = " + opredelitel);
+                }
+                Console.ReadKey();
+            }
+
+        }
+
+        static void Main(string[] args)
+        {
+            do
+            {
+                Gauss nyaaaa = new Gauss();
+                Console.WriteLine("\n[1]. Заполнить матрицу и использовать метод Гаусса и найти обратную матрицу.");              
+                Console.WriteLine("[2]. Заполнить рандомно новую матрицу и найти определитель.");
+                Console.WriteLine("[3]. Выход из программы.");
+                int i = int.Parse(Console.ReadLine());
+                switch (i)
+                {
+                    case 1:
+                        nyaaaa.gaussobr();                                                                  
+                        break;
+                    case 2:
+                        nyaaaa.opred();
+                        break;
+                    case 3:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Повторите ввод.");
+                        break;
+                }
+            } while (true);            
+        }
+    }
+}
